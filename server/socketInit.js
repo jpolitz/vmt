@@ -9,15 +9,16 @@ const io = require('socket.io')({
 io.init = function(server) {
   io.attach(server, {
     cors: {
-      origin: true,
-      // methods: ['GET', 'POST', 'FETCH'],
+      origin: 'http://localhost:3000', //true
+      methods: ['GET', 'POST', 'FETCH'],
       credentials: true,
     },
     // below are engine.IO options
     pingInterval: 10000,
     pingTimeout: 5000,
     cookie: false,
-    maxHttpBufferSize: 1e7,
+    // 1mb default package size
+    maxHttpBufferSize: 1e6,
     allowEIO3: true,
   });
 };

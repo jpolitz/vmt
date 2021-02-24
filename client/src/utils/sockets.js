@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 let url = 'http://localhost:3001';
 if (process.env.REACT_APP_STAGING) {
@@ -9,6 +9,10 @@ if (process.env.REACT_APP_STAGING) {
   url = process.env.REACT_APP_SERVER_URL_PRODUCTION;
 }
 
-const socket = io.connect(url);
+// const socket = io.connect(url);
+const socket = io(url, {
+  transports: ['websocket'],
+  withCredentials: true,
+});
 
 export default socket;
