@@ -1,13 +1,38 @@
-const sockets = {};
+const io = require('socket.io')({
+  path: '/socket.io',
+  // origins: ['http://localhost:3000'],
+  serveClient: !(
+    process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging'
+  ),
+});
 
-sockets.init = function(server) {
-  this.io = require('socket.io').listen(server, {
-    serveClient: !(
-      process.env.NODE_ENV === 'production' ||
-      process.env.NODE_ENV === 'staging'
-    ),
-    path: '/socket.io',
+io.init = function(server) {
+  io.attach(server, {
+    cors: {
+      origin: true,
+      // methods: ['GET', 'POST', 'FETCH'],
+      credentials: true,
+    },
+    // below are engine.IO options
+    pingInterval: 10000,
+    pingTimeout: 5000,
+    cookie: false,
+    maxHttpBufferSize: 1e7,
+    allowEIO3: true,
   });
 };
 
-module.exports = sockets;
+// old code
+// const sockets = {};
+
+// sockets.init = function(server) {
+//   this.io = require('socket.io').listen(server, {
+//     serveClient: !(
+//       process.env.NODE_ENV === 'production' ||
+//       process.env.NODE_ENV === 'staging'
+//     ),
+//     path: '/socket.io',
+//   });
+// };
+
+module.exports = io;

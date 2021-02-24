@@ -2,14 +2,12 @@
 // const { parseString } = require('xml2js');
 const { ObjectId } = require('mongoose').Types;
 // const cookie = require('cookie');
-const socketInit = require('./socketInit');
+const io = require('./socketInit');
 const controllers = require('./controllers');
 const Message = require('./models/Message');
 
 // const io = require('socket.io')(server, {wsEngine: 'ws'});
 module.exports = function() {
-  const { io } = socketInit;
-
   io.use((socket, next) => {
     // const cookief = socket.handshake.headers.cookie;
     // console.log(cookief);
